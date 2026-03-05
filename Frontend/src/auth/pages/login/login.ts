@@ -17,12 +17,14 @@ export class LoginPage {
   authService = inject(AuthService);
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.minLength(6)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
+
   onSubmit() {
     if (this.loginForm.invalid) {
+      console.log(this.loginForm)
       this.hasError.set(true);
       setTimeout(() => {
         this.hasError.set(false);

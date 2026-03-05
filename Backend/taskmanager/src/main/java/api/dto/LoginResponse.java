@@ -1,26 +1,21 @@
 package api.dto;
 
+
 public class LoginResponse {
 
+    private UserResponse user;
     private String token;
-    private String username;
-    private String role;
 
-    public LoginResponse(String token, String username, String role) {
+    public LoginResponse(UserResponse user, String token) {
+        this.user = user;
         this.token = token;
-        this.username = username;
-        this.role = role;
+    }
+
+    public UserResponse getUser() {
+        return user;
     }
 
     public String getToken() {
         return token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getRole() {
-        return role;
     }
 }

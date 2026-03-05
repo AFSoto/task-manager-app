@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import api.exception.UserNotFoundException;
 import api.dto.LoginRequest;
 import api.dto.LoginResponse;
+import api.dto.UserResponse;
 import api.exception.InvalidCredentialsException;
 import api.model.Role;
 import api.model.User;
@@ -83,50 +84,47 @@ public class UserService {
 
     public LoginResponse login(LoginRequest request) {
 
-        try {
+    try {
 
-            if (request.getUsername() == null || request.getUsername().trim().isEmpty()) {
-                throw new InvalidCredentialsException("Credenciales inválidas");
-            }
-
-            if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
-                throw new InvalidCredentialsException("Credenciales inválidas");
-            }
-
-            User user = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> {
-                        System.out.println("Usuario no encontrado: " + request.getUsername());
-                        return new UserNotFoundException("Usuario no encontrado");
-                    });
-
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                System.out.println("Contraseña incorrecta para: " + request.getUsername());
-                throw new InvalidCredentialsException("Credenciales inválidas");
-            }
-
-            System.out.println("Login exitoso para: " + user.getUsername());
-
-            String roleName = null;
-
-            if (user.getRole() != null) {
-                roleName = user.getRole().getName();
-                System.out.println("Rol encontrado: " + roleName);
-            } else {
-                System.out.println("⚠ ERROR: El usuario no tiene rol asignado");
-                throw new RuntimeException("Usuario sin rol asignado");
-            }
-
-            String token = jwtUtil.generateToken(user.getUsername(), roleName);
-            System.out.println("Token generado correctamente");
-
-            return new LoginResponse(
-                    token,
-                    user.getUsername(),
-                    roleName);
-
-        } catch (Exception e) {
-
-            throw new RuntimeException("Error interno en el servidor");
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            throw new InvalidCredentialsException("Credenciales inválidas");
         }
+
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            throw new InvalidCredentialsException("Credenciales inválidas");
+        }
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Credenciales inválidas");
+        }
+
+        if (user.getRole() == null) {
+            throw new RuntimeException("Usuario sin rol asignado");
+        }
+
+        String roleName = user.getRole().getName();
+        String token = jwtUtil.generateToken(user.getUsername(), roleName);
+
+        UserResponse userResponse = new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getName(),
+                user.getDocument(),
+                user.getEmail(),
+                roleName,
+                user.getImage(),
+                user.getState(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+
+        return new LoginResponse(userResponse, token);
+
+    } catch (Exception e) {
+        throw new RuntimeException("Error interno en el servidor");
     }
+}
 }

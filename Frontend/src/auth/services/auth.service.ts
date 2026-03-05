@@ -3,7 +3,9 @@ import { User } from '../interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { AuthResponse } from '../interfaces/response-interface';
+
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { RegisterRequest } from '../interfaces/register-request.interface';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
@@ -28,7 +30,8 @@ export class AuthService {
     })
 
     user = computed(() => this._user());
-    token = computed((this._token));
+    // token = computed((this._token));
+    token = computed(() => this._token());
 
 
 
@@ -51,6 +54,14 @@ export class AuthService {
           this._token.set(null);
           this._authStatus.set('not-authenticated');
           return of(false);
+        })
+      )
+    }
+
+    register(data: RegisterRequest){
+      return this.http.post(`${baseUrl}/users`,data).pipe(
+        tap(() => {
+
         })
       )
     }

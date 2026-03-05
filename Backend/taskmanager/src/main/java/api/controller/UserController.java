@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import api.dto.ApiResponse;
 import api.model.User;
 import api.service.UserService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class UserController {
         }
 
         @PostMapping
-        public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
+        public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody User user) {
                 User savedUser = userService.crearUsuario(user);
                 return ResponseEntity.status(HttpStatus.CREATED).body(
                                 new ApiResponse("success", HttpStatus.CREATED.value(), "Usuario Creado correctamente",

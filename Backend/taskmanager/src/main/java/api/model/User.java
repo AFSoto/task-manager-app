@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,48 +21,54 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    @NotBlank(message = "el username es obligatorio")
     @Column(nullable = false, unique = true)
     private String username;
-    
+
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(nullable = false)
     private String name;
-    
+
     @Column(nullable = false, unique = true)
     private String document;
-    
+
+    @Email(message = "El formato del email no es válido")
+    @NotBlank(message = "El email es obligatorio")
     @Column(nullable = false, unique = true)
     private String email;
-    
+
+    @NotBlank(message = "La contraseña es obligatoria")
     @Column(nullable = false, length = 500)
     private String password;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role")
     private Role id_role;
-    
+
     @Column(name = "image", length = 255)
     private String image;
-    
+
     @Column(name = "session_token")
     private String sessionToken;
-    
+
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean state = true;
-    
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public User() {}
+    public User() {
+    }
 
     public Long getId() {
         return id;

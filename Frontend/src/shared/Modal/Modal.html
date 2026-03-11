@@ -1,13 +1,10 @@
 @if (modalService.isOpen() && modalService.modalType() === 'createProject') {
-<app-create-project/>
+<app-create-project (projectCreated)="onProjectCreated()" />
 }
 
 @if(modalService.isOpen() && modalService.modalType() === 'createRol'){
-
-<create-rol/>
-
+  <create-rol (rolCreated)="onRolCreated()" />
 }
-
 @if(modalService.isOpen() && modalService.modalType() === 'createTasks'){
 
 

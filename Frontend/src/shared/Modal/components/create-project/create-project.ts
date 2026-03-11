@@ -10,10 +10,7 @@ import { ProjectsService } from '../../../../task-manager/pages/services/project
 })
 export class CreateProject {
 
-  modalService = inject(ModalService);
-  @Output()
-  projectCreated = new EventEmitter<void>();
-
+   modalService = inject(ModalService);
   fb = inject(FormBuilder);
   projectsService = inject(ProjectsService);
 
@@ -54,16 +51,10 @@ export class CreateProject {
 
       next: () => {
 
-        // recargar proyectos en el padre
-        this.projectCreated.emit();
-
-        // cerrar modal
+        this.modalService.notifyProjectCreated();
         this.modalService.close();
-
-        // reset formulario
         this.projectForm.reset({
           stateProjectTaskId: 1
-
         });
 
         this.isPosting.set(false);

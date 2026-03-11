@@ -18,13 +18,12 @@ export class ProjectsPage {
 
 
   projectResource = rxResource({
-    params: () => ({}),
+    params: () => this.modalService.refreshProjects(),
     stream: () => {
       return this.projectsService.getProjects();
     },
   });
 
-  
 
   openCreateProject() {
     this.modalService.open('createProject');

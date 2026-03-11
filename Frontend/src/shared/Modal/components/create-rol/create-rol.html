@@ -1,1 +1,65 @@
-<p>create-rol works!</p>,
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white dark:bg-slate-900 rounded-xl w-full max-w-md p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">Crear Nuevo Rol</h2>
+      <button
+        (click)="modalService.close()"
+        class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="rolForm" (ngSubmit)="onSubmit()">
+      <!-- Campo Nombre -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-1">Nombre del Rol</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+          placeholder="Ej: Administrador, Usuario, etc.">
+        @if (rolForm.get('name')?.invalid && rolForm.get('name')?.touched) {
+          <p class="text-red-500 text-xs mt-1">El nombre es requerido (mínimo 4 caracteres)</p>
+        }
+      </div>
+
+      <!-- Campo Descripción -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-1">Descripción</label>
+        <textarea
+          formControlName="description"
+          rows="3"
+          class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+          placeholder="Describe las funciones de este rol..."></textarea>
+        @if (rolForm.get('description')?.invalid && rolForm.get('description')?.touched) {
+          <p class="text-red-500 text-xs mt-1">La descripción es requerida</p>
+        }
+      </div>
+
+      <!-- Mensaje de error general -->
+      @if (hasError()) {
+        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+          Error al crear el rol. Intenta nuevamente.
+        </div>
+      }
+
+      <!-- Botones -->
+      <div class="flex gap-3 justify-end">
+        <button
+          type="button"
+          (click)="modalService.close()"
+          class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="rolForm.invalid || isPosting()"
+          class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ isPosting() ? 'Creando...' : 'Crear Rol' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

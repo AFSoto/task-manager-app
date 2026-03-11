@@ -4,7 +4,7 @@ import { NameRoute } from "../name-route/name-route";
 
 @Component({
   selector: 'app-header',
-  imports: [NameRoute],
+  imports: [],
   templateUrl: './header.html',
 })
 export class Header {

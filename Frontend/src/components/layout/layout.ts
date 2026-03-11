@@ -19,7 +19,7 @@ export class Layout {
 
   authService = inject(AuthService);
 
-    isCollapsed = signal(false);
+  isCollapsed = signal(false);
 
   toggleSidebar() {
     this.isCollapsed.update(v => !v);

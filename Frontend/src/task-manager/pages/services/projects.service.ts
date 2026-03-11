@@ -13,7 +13,7 @@ export class ProjectsService {
 
   baseUrl = environment.baseUrl;
 
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
   getProjects(): Observable<ProjectResponse[]> {
     return this.http.get<ProjectResponse[]>(`${this.baseUrl}/projects`)

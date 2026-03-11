@@ -25,7 +25,7 @@ export const tasksRoutes: Routes = [
       },
       {
         path: "roles", component: RolesPage,
-        canActivate: [AdminGuard]
+        // canActivate: [AdminGuard]
       },
       {
         path: "projects", component: ProjectsPage

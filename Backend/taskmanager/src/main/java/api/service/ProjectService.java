@@ -3,7 +3,6 @@ package api.service;
 import api.dto.*;
 import api.exception.ResourceNotFoundException;
 import api.model.Project;
-import api.model.Role;
 import api.model.StateProjectTask;
 import api.repository.ProjectRepository;
 import api.repository.StateProjectTaskRepository;

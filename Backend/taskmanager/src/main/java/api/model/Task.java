@@ -37,7 +37,7 @@ public class Task {
     @Column(name = "deadline")
     private LocalDateTime deadline;
 
-    // Relación con el estado (TODO, IN_PROGRESS, DONE, CANCELLED)
+    // Relación con el estado (TO-DO, IN_PROGRESS, DONE, CANCELLED)
     @NotNull(message = "El estado es obligatorio")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_state_project_task", nullable = false)

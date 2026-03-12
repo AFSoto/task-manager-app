@@ -109,7 +109,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    // Cambia el estado de una tarea — TODO → IN_PROGRESS → DONE → CANCELLED
+    // Cambia el estado de una tarea — TO-DO → IN_PROGRESS → DONE → CANCELLED
     public Task updateStatus(Long id, Long stateId) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tarea no encontrada"));

@@ -51,7 +51,7 @@ export class AuthService {
     }
 
     register(data: RegisterRequest){
-      return this.http.post(`${baseUrl}/users`,data).pipe(
+      return this.http.post(`${baseUrl}/auth/register`,data).pipe(
         tap(() => {
 
         })
@@ -114,6 +114,12 @@ export class AuthService {
     }
 
 
+    checkUsername(username: string): Observable<boolean> {
+  return this.http.get<any>(`${baseUrl}/auth/check-username?username=${username}`).pipe(
+    map(resp => resp.data as boolean), // true = disponible, false = ocupado
+    catchError(() => of(false))
+  );
+}
 
 
 

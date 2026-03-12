@@ -38,7 +38,7 @@ export class LoginPage {
     this.authService.login(email!, password!).subscribe((isAuthenticated) =>{
 
       if(isAuthenticated){
-        this.router.navigateByUrl("/tasks");
+        this.router.navigateByUrl("/tasks/tasks");
         return;
       }
       this.hasError.set(true);

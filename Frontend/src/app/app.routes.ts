@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomePage } from '../home-page/pages/home-page/home-page';
 import { NotAuthenticatedGuard } from '../auth/guards/not-authenticated.gard';
+import { IsAuthGuard } from '../auth/guards/is-not-auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,9 @@ export const routes: Routes = [
   },
   {
     path:'',
-    loadChildren: () => import('../task-manager/task.routes')
+    loadChildren: () => import('../task-manager/task.routes'),
+    canActivate:[
+      IsAuthGuard,
+    ]
   }
 ];

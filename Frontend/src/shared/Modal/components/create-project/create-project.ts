@@ -2,10 +2,11 @@ import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { ModalService } from '../../modal.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectsService } from '../../../../task-manager/pages/services/projects.service';
+import { StatusProject } from "../../../../components/statusProject/statusProject";
 
 @Component({
   selector: 'app-create-project',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, StatusProject],
   templateUrl: './create-project.html',
 })
 export class CreateProject {

@@ -1,5 +1,6 @@
-<div
-  class="group bg-white dark:bg-stone-900 p-5 rounded-xl border border-slate-200 dark:border-stone-800 hover:border-primary/50 transition-all shadow-sm">
+<a
+  class="group bg-white dark:bg-stone-900 p-5 rounded-xl border border-slate-200 dark:border-stone-800 hover:border-primary/50 transition-all shadow-sm block"
+  [routerLink]="['/tasks/projects', project().id]">
   <div class="flex justify-between items-start mb-4">
     <div class="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center text-primary">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

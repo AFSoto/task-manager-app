@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -38,14 +39,17 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public List<ProjectResponse> getAllProjects() {
+        return projectRepository.findAll()
+                .stream()
+                .map(this::mapToProjectResponse)
+                .collect(Collectors.toList());
     }
 
-    public Project getProjectById(Long id) {
-
-        return projectRepository.findById(id)
+    public ProjectResponse getProjectById(Long id) {
+        Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+        return mapToProjectResponse(project);
     }
 
     public Project updateProject(Long id, UpdateProjectRequest request) {
@@ -66,6 +70,31 @@ public class ProjectService {
 
         return projectRepository.save(project);
     }
-    
+
+    private ProjectResponse mapToProjectResponse(Project project) {
+        ProjectResponse response = new ProjectResponse();
+        response.setId(project.getId());
+        response.setName(project.getName());
+        response.setDescription(project.getDescription());
+        response.setState(project.getState());
+        response.setStartDate(project.getStartDate());
+        response.setEndDate(project.getEndDate());
+        response.setDeadline(project.getDeadline());
+        response.setCreatedAt(project.getCreatedAt());
+        response.setUpdatedAt(project.getUpdatedAt());
+        response.setStateProjectTask(project.getstateProjectTask());
+        response.setTasks(project.getTasks());
+
+        if (project.getUserProjects() != null) {
+            List<UserSummary> users = project.getUserProjects()
+                    .stream()
+                    .map(up -> up.getUser())
+                    .map(u -> new UserSummary(u.getId(), u.getName(), u.getImage()))
+                    .collect(Collectors.toList());
+            response.setUsers(users);
+        }
+
+        return response;
+    }
 }
 

@@ -1,3 +1,5 @@
+import { TasksResponse } from '../../task-list--page/interfaces/tasks.interfaces';
+
 export interface ProjectResponse {
   id:               number;
   name:             string;
@@ -9,6 +11,8 @@ export interface ProjectResponse {
   createdAt:        Date;
   updatedAt:        Date;
   stateProjectTask: StateProjectTask;
+  tasks:            TasksResponse[];
+  users:            ProjectUser[];
 }
 
 export interface StateProjectTask {
@@ -17,3 +21,10 @@ export interface StateProjectTask {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ProjectUser {
+  id:    number;
+  name:  string;
+  image: string | null;
+}
+

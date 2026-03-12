@@ -9,6 +9,7 @@ import { TeamsPage } from "./pages/teams-page/teams-page";
 import { AdminGuard } from "../auth/guards/admin.guard";
 import { UsersPage } from "./pages/users-page/users-page";
 import { RolesPage } from "./pages/roles-page/roles-page";
+import { ProjectDetailPage } from "./pages/project-detail-page/project-detail-page";
 
 export const tasksRoutes: Routes = [
   {
@@ -29,6 +30,9 @@ export const tasksRoutes: Routes = [
       },
       {
         path: "projects", component: ProjectsPage
+      },
+      {
+        path: "projects/:id", component: ProjectDetailPage
       },
       {
         path: "tasks", component: TaskListPage

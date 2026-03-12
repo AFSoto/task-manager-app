@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.dto.CreateProjectRequest;
+import api.dto.ProjectResponse;
 import api.dto.UpdateProjectRequest;
 import api.model.Project;
 import api.service.ProjectService;
@@ -24,12 +25,12 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
+    public List<ProjectResponse> getAllProjects() {
         return projectService.getAllProjects();
     }
 
     @GetMapping("/{id}")
-    public Project getProjectById(@PathVariable Long id) {
+    public ProjectResponse getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
     }
 
